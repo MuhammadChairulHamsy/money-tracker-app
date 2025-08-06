@@ -59,7 +59,7 @@ const Add = {
     const photo = evidenceImgInput.files[0];
     if(!photo) return;
 
-    const reader = new fileReader();
+    const reader = new FileReader();
     reader.onload = (event) => {
         evidenceImgChange.parentElement.classList.remove('d-none');
         evidenceImgChange.style.backgroundImage = `url('${event.target.result}')`;
@@ -68,7 +68,7 @@ const Add = {
     reader.readAsDataURL(photo);
   },
 
-  _validateFormData() {
+  _validateFormData(formData) {
     const formDataFiltered = Object.values(formData).filter((item) => item === '');
 
     return formDataFiltered.length === 0;

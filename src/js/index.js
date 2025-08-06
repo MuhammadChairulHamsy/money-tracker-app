@@ -1,10 +1,14 @@
 import '../scss/main.scss';
 
 import Dashboard from './pages/dashboard';
+import Add from './pages/transactions/add';
+import Edit from './pages/transactions/edit';
 import * as bootstrap from 'bootstrap';
 
 const routes = {
     '/': Dashboard,
+    '/transactions/add.html': Add,
+    '/transactions/edit.html': Edit,
 };
 
 const detectRoute = () => routes[window.location.pathname];
