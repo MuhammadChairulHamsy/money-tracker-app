@@ -14,7 +14,7 @@ const Edit = {
 
     const fetchRecords = await fetch('/data/DATA.json');
     const responseRecords = await fetchRecords.json();
-    const userTransactionsHistory = responseRecords.result.transactionsHistory;
+    const userTransactionsHistory = responseRecords.results.transactionsHistory;
 
     const dataRecord = userTransactionsHistory.find((item) => item.id === transactionId);
 
@@ -24,7 +24,7 @@ const Edit = {
   _initialListener() {
     const evidenceInput = document.querySelector('#validationCustomEvidence');
     evidenceInput.addEventListener('change', () => {
-      this._updatePhotPreview();
+      this._updatePhotoPreview();
     });
 
     const editRecordForm = document.querySelector('#editRecordForm');
@@ -62,7 +62,7 @@ const Edit = {
 
     return {
       name: nameInput.value,
-      amout: Number(amountInput.value),
+      amount: Number(amountInput.value),
       date: new Date(dateInput.value),
       evidence: evidenceInput.files[0],
       description: descriptionInput.value,
@@ -70,7 +70,7 @@ const Edit = {
     };
   },
 
-  _updatePhotPreview() {
+  _updatePhotoPreview() {
     const evidenceImg = document.querySelector('#validationCustomEvidenceImg');
     const evidenceImgChange = document.querySelector('#validationCustomEvidenceImgChange');
     const evidenceImgInput = document.querySelector('#validationCustomEvidence');
@@ -91,9 +91,7 @@ const Edit = {
 
   _populateTransactionToForm(transactionRecord = null) {
     if (!(typeof transactionRecord === 'object')) {
-      throw new Error(
-        `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
-      );
+      throw new Error(`Parameter transactionRecord should be an object.`);
     }
 
     const nameInput = document.querySelector('#validationCustomRecordName');
@@ -101,16 +99,16 @@ const Edit = {
     const dateInput = document.querySelector('#validationCustomDate');
     const evidenceInput = document.querySelector('#validationCustomEvidenceImg');
     const descriptionInput = document.querySelector('#validationCustomNotes');
-    const types = document.querySelectorAll('input[name="recordType"]');
+    const typesInput = document.querySelectorAll('input[name="recordType"]');
 
     nameInput.value = transactionRecord.name;
-    amountInput.value = transactionRecord.amaout;
+    amountInput.value = transactionRecord.amount;
     dateInput.value = transactionRecord.date;
     evidenceInput.setAttribute('src', transactionRecord.evidenceUrl);
     evidenceInput.setAttribute('alt', transactionRecord.name);
     descriptionInput.value = transactionRecord.description;
-    types.forEach((item) => {
-      item.chacked = item.value === transactionRecord.type;
+    typesInput.forEach((item) => {
+      item.checked = item.value === transactionRecord.type;
     });
   },
 

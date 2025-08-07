@@ -55,14 +55,14 @@ const Add = {
   _updatePhotoPreview() {
     const evidenceImgChange = document.querySelector('#validationCustomEvidenceImgChange');
     const evidenceImgInput = document.querySelector('#validationCustomEvidence');
-  
+
     const photo = evidenceImgInput.files[0];
-    if(!photo) return;
+    if (!photo) return;
 
     const reader = new FileReader();
     reader.onload = (event) => {
-        evidenceImgChange.parentElement.classList.remove('d-none');
-        evidenceImgChange.style.backgroundImage = `url('${event.target.result}')`;
+      evidenceImgChange.classList.remove('d-none');
+      evidenceImgChange.style.backgroundImage = `url('${event.target.result}')`;
     };
 
     reader.readAsDataURL(photo);
@@ -74,10 +74,9 @@ const Add = {
     return formDataFiltered.length === 0;
   },
 
-  _gotoDashboardPage() {
+  _goToDashboardPage() {
     window.location.href = '/';
   },
 };
-
 
 export default Add;
