@@ -28,28 +28,45 @@ const Dashboard = {
   },
 
   _populateTransactionsDataToCard(transactionsHistory = null) {
-    if (!(typeof transactionsHistory === 'object')) {
-      throw new Error(`Parameter responseRecords should be an object.`);
-    }
-
-    if (!Array.isArray(transactionsHistory)) {
-      throw new Error('Parameter transactionsHistory should be an array.');
-    }
-
-    let amountIncome = 0;
-    let amountExpense = 0;
-
-    transactionsHistory.forEach((item) => {
-      if (item.type === 'income') {
-        amountIncome += item.amount;
-      } else if (item.type === 'expense') {
-        amountExpense += item.amount;
+    try {
+      // Validasi parameter
+      if (!Array.isArray(transactionsHistory)) {
+        throw new Error('Parameter transactionsHistory should be an array.');
       }
-    });
 
-    document.querySelector('#numberOfTransactions').innerText = transactionsHistory.length;
-    document.querySelector('#amountIncome').innerText = amountIncome;
-    document.querySelector('#amountExpense').innerText = amountExpense;
+      let amountIncome = 0;
+      let amountExpense = 0;
+
+      transactionsHistory.forEach((item) => {
+        if (item && typeof item === 'object') {
+          if (item.type === 'income' && typeof item.amount === 'number') {
+            amountIncome += item.amount;
+          } else if (item.type === 'expense' && typeof item.amount === 'number') {
+            amountExpense += item.amount;
+          }
+        }
+      });
+
+      // Fungsi helper untuk update elemen dengan error handling
+      const updateCardElement = (selector, content) => {
+        const element = document.querySelector(selector);
+        if (element) {
+          element.setAttribute('content', content);
+        } else {
+          console.error(`Element with selector "${selector}" not found in DOM`);
+          return false;
+        }
+        return true;
+      };
+
+      // Update elemen-elemen card
+      updateCardElement('#transactions-card', `${transactionsHistory.length} Transaksi`);
+      updateCardElement('#income-card', `Rp ${amountIncome.toLocaleString('id-ID')}`);
+      updateCardElement('#expense-card', `Rp ${amountExpense.toLocaleString('id-ID')}`);
+    } catch (error) {
+      console.error('Error in _populateTransactionsDataToCard:', error.message);
+      throw error;
+    }
   },
 
   _populateTransactionsRecordToTable(transactionsHistory = null) {
@@ -79,8 +96,10 @@ const Dashboard = {
   },
 
   _populateDetilTransactionsModal() {
-    if(!(typeof transactionRecord === 'object')) {
-      throw new Error(`Parameter transactionRecord should be an object. The value is ${transactionRecord}`);
+    if (!(typeof transactionRecord === 'object')) {
+      throw new Error(
+        `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
+      );
     }
 
     const imgDetailRecord = document.querySelector('#recordDetailModal #imgDetailRecord');
@@ -92,7 +111,8 @@ const Dashboard = {
 
     imgDetailRecord.setAttribute('src', transactionRecord.evidenceUrl);
     imgDetailRecord.setAttribute('alt', transactionRecord.name);
-    typeDetailRecord.textContent = transactionRecord.type === 'income' ? 'Pemasukan' : 'Pengeluaran';
+    typeDetailRecord.textContent =
+      transactionRecord.type === 'income' ? 'Pemasukan' : 'Pengeluaran';
     nameDetailRecord.textContent = transactionRecord.name;
     dateDetailRecord.textContent = transactionRecord.date;
     amountDetailRecord.textContent = transactionRecord.amount;

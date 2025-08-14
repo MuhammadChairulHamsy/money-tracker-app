@@ -1,5 +1,8 @@
 import '../scss/main.scss';
 
+// Import Component
+import './components/index';
+
 import Dashboard from './pages/dashboard';
 import Add from './pages/transactions/add';
 import Edit from './pages/transactions/edit';
