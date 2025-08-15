@@ -23,7 +23,7 @@ const Dashboard = {
         return item.id == parseInt(button.dataset.recordId, 10);
       });
 
-      this._populateDetilTransactionsModal(dataRecord);
+      this._populateDetailTransactionsModal(dataRecord);
     });
   },
 
@@ -95,7 +95,7 @@ const Dashboard = {
     });
   },
 
-  _populateDetilTransactionsModal() {
+  _populateDetailTransactionsModal() {
     if (!(typeof transactionRecord === 'object')) {
       throw new Error(
         `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
