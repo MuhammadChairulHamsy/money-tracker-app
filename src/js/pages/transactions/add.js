@@ -30,7 +30,7 @@ const Add = {
       console.log('formData');
       console.log(formData);
 
-      // this._goToDashboardPage();
+      this._goToDashboardPage();
     }
   },
 
@@ -55,7 +55,7 @@ const Add = {
   _updatePhotoPreview() {
     const evidenceImgChange = document.querySelector('#validationCustomEvidenceImgChange');
     const evidenceImgInput = document.querySelector('#validationCustomEvidence');
-
+ 
     const photo = evidenceImgInput.files[0];
     if (!photo) return;
 

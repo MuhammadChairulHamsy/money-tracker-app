@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import LitWithoutShadowDom from './base/LitWithoutShadoDom';
+import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 
 class ButtonLink extends LitWithoutShadowDom {
   static properties = {

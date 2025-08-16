@@ -48,7 +48,7 @@ const Edit = {
       console.log('formData');
       console.log(formData);
 
-      // this._goToDashboardPage();
+      this._goToDashboardPage();
     }
   },
 

@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import LitWithoutShadowDom from "./base/LitWithoutShadoDom";
+import LitWithoutShadowDom from "./base/LitWithoutShadowDom";
 
 class NavApp extends LitWithoutShadowDom {
   static properties = {
