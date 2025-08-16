@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <nav-app brandName="<%= brandName $>"></nav-app>
+      <nav-app brandName="<%= brandName %>"></nav-app>
     </header>
 
     <main>
@@ -18,10 +18,10 @@
           <div class="row mb-5 g-3">
             <div class="col-12 col-sm-6 col-lg-4">
               <card-dashboard
-                id="transaction-card"
+                id="transactions-card"
                 content="0 Transaksi"
                 description="Bulan ini"
-                classes="card h-100 bg-primary text-bg-primary bg-gradient"
+                classes="h-100 bg-primary text-bg-primary bg-gradient"
               >
               </card-dashboard>
             </div>
@@ -30,7 +30,7 @@
                 id="income-card"
                 content="Rp 0"
                 description="Total pemasukan"
-                classes="card h-100 bg-success text-bg-success bg-gradient"
+                classes="h-100 bg-success text-bg-success bg-gradient"
               >
               </card-dashboard>
             </div>
@@ -39,7 +39,7 @@
                 id="expense-card"
                 content="Rp 0"
                 description="Total pengeluaran"
-                classes="card h-100 bg-warning text-bg-warning bg-gradient"
+                classes="h-100 bg-warning text-bg-warning bg-gradient"
               >
               </card-dashboard>
             </div>
@@ -50,7 +50,7 @@
               <h1>Riwayat Transaksi</h1>
               <button-link
                 classes="btn-primary text-capitalize"
-                to="/transaction/add.html"
+                to="/transactions/add.html"
                 icon="bi-plus-lg"
                 content="Tambah Transaksi"
               ></button-link>
@@ -78,7 +78,7 @@
     </main>
 
     <footer>
-      <div class="main-footer bg-dark">
+      <div class="main-footeButtr bg-dark">
         <div class="container px-3 py-4">
           <footer-app></footer-app>
         </div>
@@ -87,7 +87,7 @@
 
     <modal-transaction
       title="Rincian Transaksi"
-      class="modal-fade"
+      class="modal fade"
       id="recordDetailModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"

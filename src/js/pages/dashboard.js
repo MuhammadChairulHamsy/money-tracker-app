@@ -23,50 +23,36 @@ const Dashboard = {
         return item.id == parseInt(button.dataset.recordId, 10);
       });
 
-      this._populateDetailTransactionsModal(dataRecord);
+      this._populateDetailTransactionsToModal(dataRecord);
     });
   },
 
   _populateTransactionsDataToCard(transactionsHistory = null) {
-    try {
-      // Validasi parameter
-      if (!Array.isArray(transactionsHistory)) {
-        throw new Error('Parameter transactionsHistory should be an array.');
-      }
-
-      let amountIncome = 0;
-      let amountExpense = 0;
-
-      transactionsHistory.forEach((item) => {
-        if (item && typeof item === 'object') {
-          if (item.type === 'income' && typeof item.amount === 'number') {
-            amountIncome += item.amount;
-          } else if (item.type === 'expense' && typeof item.amount === 'number') {
-            amountExpense += item.amount;
-          }
-        }
-      });
-
-      // Fungsi helper untuk update elemen dengan error handling
-      const updateCardElement = (selector, content) => {
-        const element = document.querySelector(selector);
-        if (element) {
-          element.setAttribute('content', content);
-        } else {
-          console.error(`Element with selector "${selector}" not found in DOM`);
-          return false;
-        }
-        return true;
-      };
-
-      // Update elemen-elemen card
-      updateCardElement('#transactions-card', `${transactionsHistory.length} Transaksi`);
-      updateCardElement('#income-card', `Rp ${amountIncome.toLocaleString('id-ID')}`);
-      updateCardElement('#expense-card', `Rp ${amountExpense.toLocaleString('id-ID')}`);
-    } catch (error) {
-      console.error('Error in _populateTransactionsDataToCard:', error.message);
-      throw error;
+    if (!(typeof transactionsHistory === 'object')) {
+      throw new Error(
+        `Parameter transactionsHistory should be an object. The value is ${transactionsHistory}`,
+      );
     }
+    // Validasi parameter
+    if (!Array.isArray(transactionsHistory)) {
+      throw new Error('Parameter transactionsHistory should be an array.');
+    }
+
+    let amountIncome = 0;
+    let amountExpense = 0;
+    transactionsHistory.forEach((item) => {
+      if (item.type === 'income') {
+        amountIncome += item.amount;
+      } else if (item.type === 'expense') {
+        amountExpense += item.amount;
+      }
+    });
+
+    document
+      .querySelector('#transactions-card')
+      .setAttribute('content', `${transactionsHistory.length} Transaksi`);
+    document.querySelector('#income-card').setAttribute('content', `Rp ${amountIncome}`);
+    document.querySelector('#expense-card').setAttribute('content', `Rp ${amountExpense}`);
   },
 
   _populateTransactionsRecordToTable(transactionsHistory = null) {
@@ -95,7 +81,7 @@ const Dashboard = {
     });
   },
 
-  _populateDetailTransactionsModal() {
+  _populateDetailTransactionsToModal(transactionRecord) {
     if (!(typeof transactionRecord === 'object')) {
       throw new Error(
         `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,

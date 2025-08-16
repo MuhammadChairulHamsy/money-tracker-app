@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import LitWithoutShadowDom from './base/LitWithoutShadowDom';
+import LitWithoutShadowDom from "./base/LitWithoutShadoDom";
 
 class ModalTransaction extends LitWithoutShadowDom {
   static properties = {
@@ -8,45 +8,49 @@ class ModalTransaction extends LitWithoutShadowDom {
 
   render() {
     return html`
-      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+       <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">${this.title}</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
-                <img src="" alt="Evidence of transaction" id="imgDetailRecord" class="img-fluid">
+              <img src="" id="imgDetailRecord" class="img-fluid" alt="Evidence of transaction" />
             </div>
-
+ 
             <table>
-                <tbody>
-                    <tr>
-                        <td class="fw-bold">Tipe</td>
-                        <td class="fw-bold ms-3 d-inline-block">:</td>
-                        <td id="typeDetailRecord"></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">Nama</td>
-                        <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
-                        <td id="nameDetailRecord"></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">Tanggal</td>
-                        <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
-                        <td id="dateDetailRecord"></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">Jumlah Uang</td>
-                        <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
-                        <td id="amountDetailRecord"></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">Catatan</td>
-                        <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
-                        <td id="noteDetailRecord"></td>
-                    </tr>
-                </tbody>
+              <tbody>
+                <tr>
+                  <td class="fw-bold">Tipe</td>
+                  <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
+                  <td id="typeDetailRecord"></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Nama</td>
+                  <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
+                  <td id="nameDetailRecord"></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Tanggal</td>
+                  <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
+                  <td id="dateDetailRecord"></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Jumlah Uang</td>
+                  <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
+                  <td id="amountDetailRecord"></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Catatan</td>
+                  <td class="fw-bold ms-3 me-1 d-inline-block">:</td>
+                  <td id="noteDetailRecord"></td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <div class="modal-footer">

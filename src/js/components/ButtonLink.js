@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import LitWithoutShadowDom from './base/LitWithoutShadowDom';
+import LitWithoutShadowDom from './base/LitWithoutShadoDom';
 
 class ButtonLink extends LitWithoutShadowDom {
   static properties = {
@@ -35,7 +35,7 @@ class ButtonLink extends LitWithoutShadowDom {
   }
 
   _templateIcon() {
-    if(!this.icon) {
+    if(this.icon) {
       return html`<i class="bi ${this.icon} me-1"></i>`;
     }
     return html;

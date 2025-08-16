@@ -21,7 +21,7 @@ class CardDashboard extends LitWithoutShadowDom {
             <div class="card ${this.classes}">
                 <div class="card-body">
                 <h1 class="card-title fs-2">
-                    ${this.content}<br>
+                    ${this.content}<br/>
                     <span class="fs-5">${this.description}</span>
                 </h1>
                 <p class="card-text"></p>

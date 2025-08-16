@@ -1,12 +1,12 @@
 import { html } from "lit";
-import LitWithoutShadowDom from './base/LitWithoutShadowDom';
+import LitWithoutShadowDom from "./base/LitWithoutShadoDom";
 
 class NavLinks extends LitWithoutShadowDom {
     render() {
         return html`
             <ul class="navbar-nav d-flex align-items-center gap-3">
                 <nav-link content="Dashboard" to="/"></nav-link>
-                <nav-link content="Add Record" to="/transaction/add.html"></nav-link>
+                <nav-link content="Add Record" to="/transactions/add.html"></nav-link>
                 <nav-link-auth class="d-none" id="userLoggedMenu"></nav-link-auth>
                 <nav-link content="Log in" to="#" id="loginMenu"></nav-link>
             </ul>
