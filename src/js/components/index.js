@@ -14,3 +14,5 @@ import './form/TextareaWithValidation';
 import './form/InputGroupWithValidation'
 import './form/InputImageWithPreview';
 import './form/InputRadioWithValidation'
+import './form/LocalePicker';
+import './form/RadioItem';

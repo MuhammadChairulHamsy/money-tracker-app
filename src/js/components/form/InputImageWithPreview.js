@@ -21,7 +21,6 @@ class InputImageWithPreview extends LitWithoutShadowDom {
     this.defaultImageAlt = '';
   }
 
-
   render() {
     return html`
       <div style="width: 100%; height: 20rem" class="mb-3 ${!this.defaultImage ? 'd-none' : ''}">
@@ -35,7 +34,7 @@ class InputImageWithPreview extends LitWithoutShadowDom {
         ?required=${this.required}
         @change=${this._updatePhotoPreview}
       />
- 
+
       ${this._feedbackTemplate()}
     `;
   }
@@ -43,13 +42,61 @@ class InputImageWithPreview extends LitWithoutShadowDom {
   _updatePhotoPreview() {
     const evidenceImgChange = document.querySelector('#validationCustomEvidenceImgChange');
     const evidenceImgInput = document.querySelector('#validationCustomEvidence');
-    
+
     let evidenceRecordImg = null;
-    if(this.defaultImage) {
-      evidenceRecordImg =  document.querySelector('#validationCustomEvidenceImg');
+    if (this.defaultImage) {
+      evidenceRecordImg = document.querySelector('#validationCustomEvidenceImg');
     }
 
-    
+    const photo = evidenceImgInput.files[0];
+    if (!photo) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (this.defaultImage) {
+        evidenceRecordImg.classList.add('d-none');
+      }
+
+      evidenceImgChange.parentElement.classList.remove('d-none');
+      evidenceImgChange.classList.remove('d-none');
+      evidenceImgChange.style.backgroundImage = `url('${event.target.result}')`;
+    };
+
+    reader.readAsDataURL(photo);
+  }
+
+  _feedbackTemplate() {
+    let validFeedbackTemplate = '';
+    let invalidFeedbackTemplate = '';
+    if (this.validFeedbackMessage) {
+      validFeedbackTemplate = html`<div class="valid-feed">${this.validFeedbackMessage}</div>`;
+    }
+    if (this.invalidFeedbackMessage) {
+      invalidFeedbackTemplate = html`<div class="invalid-feedback">
+        ${this.invalidFeedbackMessage}
+      </div>`;
+    }
+
+    return html`${validFeedbackTemplate}${invalidFeedbackTemplate}`;
+  }
+
+  _imagePreviewTemplate() {
+    const imgChangeTemplate = html`
+      <div
+        class="w-100 h-100 ${this.defaultImage ? 'd-none' : ''}"
+        style="background-repeat: no-repeat; background-position: center; backround-size: contain;"
+        id="${this.inputId || nothing}ImgChange"
+      ></div>
+    `;
+
+    if(this.defaultImage) {
+      return html`
+        <img src="${this.defaultImage}" alt="${this.defaultImageAlt}" class="img-fluid h-100" id="${this.inputId || nothing}Img" />
+        ${imgChangeTemplate}
+      `;
+    }
+
+    return html`${imgChangeTemplate}`;
   }
 }
 
