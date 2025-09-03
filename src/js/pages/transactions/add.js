@@ -20,8 +20,11 @@ const Add = {
       },
     ];
 
-    const listInputRadioTransactionTypeAdd = document.querySelector('#inputRadioTransactionTypeAdd');
-    listInputRadioTransactionTypeAdd.setAttribute('listRadio', JSON.stringify(listInputRadioTransactionType));
+    const inputRadioTransactionTypeAdd = document.querySelector('#inputRadioTransactionTypeAdd');
+    inputRadioTransactionTypeAdd.setAttribute(
+      'listRadio',
+      JSON.stringify(listInputRadioTransactionType),
+    );
   },
 
   _initialListener() {
@@ -46,7 +49,7 @@ const Add = {
       console.log('formData');
       console.log(formData);
 
-      this._goToDashboardPage();
+      // this._goToDashboardPage();
     }
   },
 

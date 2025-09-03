@@ -14,12 +14,12 @@ class RadioItem extends LitWithoutShadowDom {
 
   constructor() {
     super();
- 
+
     this.required = false;
     this.checked = false;
   }
 
-   render() {
+  render() {
     return html`
       <div class="form-check form-check-inline">
         <input
@@ -32,11 +32,11 @@ class RadioItem extends LitWithoutShadowDom {
           ?checked=${this.checked}
           @input=${(e) => (this.value = e.target.value)}
         />
-        
+
         <label class="form-check-label" for="${this.inputId}">${this.caption}</label>
       </div>
     `;
-  } 
+  }
 }
 
 customElements.define('radio-item', RadioItem);

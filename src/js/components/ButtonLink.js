@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 
 class ButtonLink extends LitWithoutShadowDom {
@@ -21,24 +21,25 @@ class ButtonLink extends LitWithoutShadowDom {
       throw new Error(`Atribut "to" harus diterapkan pada elemen ${this.localName}`);
     }
 
-    if(!this.hasAttribute('content')) {
+    if (!this.hasAttribute('content')) {
       throw new Error(`Atribut "content" harus diterapkan pada elemen ${this.localName}`);
     }
   }
-  
+
   render() {
     return html`
-      <a href=${this.to} class="btn ${this.classes}">
+      <a class="btn ${this.classes}" href=${this.to}>
         ${this._templateIcon()}${this.content}
       </a>
     `;
   }
 
   _templateIcon() {
-    if(this.icon) {
+    if (this.icon) {
       return html`<i class="bi ${this.icon} me-1"></i>`;
     }
-    return html;
+
+    return html``;
   }
 }
 

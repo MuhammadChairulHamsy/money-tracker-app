@@ -1,5 +1,5 @@
-import { html, nothing } from 'lit';
-import LitWithoutShadowDom from "./base/LitWithoutShadowDom";
+import LitWithoutShadowDom from './base/LitWithoutShadowDom';
+import { html } from 'lit';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
 
 class NavLinkAuth extends LitWithoutShadowDom {
@@ -12,24 +12,26 @@ class NavLinkAuth extends LitWithoutShadowDom {
     return html`
       <li class="nav-item dropdown">
         <a
-          href="#"
           class="nav-link dropdown-toggle text-nowrap"
+          href="#"
           role="button"
           data-bs-toggle="dropdown"
         >
           <div class="me-2 d-inline-block">
             <img
               id="imgUserLogged"
+              style="width: 30px;height: 30px"
+              class="img-fluid rounded-pill"
               src="https://ui-avatars.com/api/?name=User%20Name&background=random"
               alt="User Name"
-              style="width: 30px; height: 30px;"
-              class="img-fluid rounded-fill"
             />
           </div>
           <span id="nameUserLogged"></span>
         </a>
         <ul class="dropdown-menu">
-          <a id="userLogOut" class="dropdown-item">${msg(`Keluar`)}</a>
+          <a class="dropdown-item" id="userLogOut">
+            ${msg(`Keluar`)}
+          </a>
         </ul>
       </li>
     `;

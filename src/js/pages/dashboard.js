@@ -20,10 +20,10 @@ const Dashboard = {
 
       const button = event.relatedTarget;
       const dataRecord = this._userTransactionsHistory.find((item) => {
-        return item.id == parseInt(button.dataset.recordId, 10);
+        return item.id == button.dataset.recordId;
       });
 
-      this._populateDetailTransactionsToModal(dataRecord);
+      this._populateDetailTransactionToModal(dataRecord);
     });
   },
 
@@ -33,13 +33,16 @@ const Dashboard = {
         `Parameter transactionsHistory should be an object. The value is ${transactionsHistory}`,
       );
     }
-    // Validasi parameter
+
     if (!Array.isArray(transactionsHistory)) {
-      throw new Error('Parameter transactionsHistory should be an array.');
+      throw new Error(
+        `Parameter transactionsHistory should be an array. The value is ${transactionsHistory}`,
+      );
     }
 
     let amountIncome = 0;
     let amountExpense = 0;
+
     transactionsHistory.forEach((item) => {
       if (item.type === 'income') {
         amountIncome += item.amount;
@@ -47,7 +50,7 @@ const Dashboard = {
         amountExpense += item.amount;
       }
     });
-
+    
     document
       .querySelector('#transactions-card')
       .setAttribute('content', `${transactionsHistory.length} Transaksi`);
@@ -81,7 +84,7 @@ const Dashboard = {
     });
   },
 
-  _populateDetailTransactionsToModal(transactionRecord) {
+  _populateDetailTransactionToModal(transactionRecord) {
     if (!(typeof transactionRecord === 'object')) {
       throw new Error(
         `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
@@ -107,31 +110,30 @@ const Dashboard = {
 
   _templateBodyTable(index, transactionRecord) {
     return `
-          <tr>
-            <th class="text-center">${parseInt(index, 10) + 1}</th>
-            <td>${transactionRecord.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}</td>
-            <td>${transactionRecord.name}</td>
-            <td>${transactionRecord.amount}</td>
-            <td>${transactionRecord.date}</td>
-            <td>
-              <div class="d-flex justify-content-center align-items-center gap-2">
-                <a class="btn btn-sm btn-primary" 
-                  data-bs-toggle="modal" data-bs-target="#recordDetailModal" 
-                  data-record-id="${transactionRecord.id}"
-                >
-                  <i class="bi bi-eye-fill me-1"></i>Show
-                </a>
-                <a class="btn btn-sm btn-warning" href="/transactions/edit.html?id=${
-                  transactionRecord.id
-                }">
-                  <i class="bi bi-pen-fill me-1"></i>Edit
-                </a>
-                <a class="btn btn-sm btn-danger" href="#">
-                  <i class="bi bi-trash3-fill me-1"></i>Delete
-                </a>
-              </div>
-            </td>
-          </tr>
+      <tr>
+        <th class="text-center">${parseInt(index, 10) + 1}</th>
+        <td>${transactionRecord.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}</td>
+        <td>${transactionRecord.name}</td>
+        <td>${transactionRecord.amount}</td>
+        <td>${transactionRecord.date}</td>
+        <td>
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <a class="btn btn-sm btn-primary" href="#"
+               data-bs-toggle="modal" data-bs-target="#recordDetailModal" 
+               data-record-id="${transactionRecord.id}">
+              <i class="bi bi-eye-fill me-1"></i>Show
+            </a>
+            <a class="btn btn-sm btn-warning" href="/transactions/edit.html?id=${
+              transactionRecord.id
+            }">
+              <i class="bi bi-pen-fill me-1"></i>Edit
+            </a>
+            <a class="btn btn-sm btn-danger" href="#">
+              <i class="bi bi-trash3-fill me-1"></i>Delete
+            </a>
+          </div>
+        </td>
+      </tr>
     `;
   },
 
@@ -139,7 +141,7 @@ const Dashboard = {
     const recordHeadTable = document.querySelector('#recordsTable thead');
 
     return `
-         <tr>
+      <tr>
         <td colspan="${recordHeadTable.querySelectorAll('td,th').length}">
           <div class="text-center">Tidak ada catatan transaksi</div>
         </td>

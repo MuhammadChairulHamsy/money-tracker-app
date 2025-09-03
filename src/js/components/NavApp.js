@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import LitWithoutShadowDom from "./base/LitWithoutShadowDom";
+import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 
 class NavApp extends LitWithoutShadowDom {
   static properties = {
@@ -8,8 +8,7 @@ class NavApp extends LitWithoutShadowDom {
 
   constructor() {
     super();
-
-    this._checkAvailabilityProperty();
+    this._checkAvailabilityProperty()
   }
 
   _checkAvailabilityProperty() {
@@ -31,9 +30,9 @@ class NavApp extends LitWithoutShadowDom {
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <nav-links class="ms-auto mb-2 mb-md-0">
-        </div>
+          </div>
         </div>
       </nav>
     `;

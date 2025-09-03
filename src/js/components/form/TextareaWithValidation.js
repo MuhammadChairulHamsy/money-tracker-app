@@ -24,7 +24,7 @@ class TextareaWithValidation extends LitWithoutShadowDom {
   _checkAvailabilityProperty() {
     if (!this.hasAttribute('invalidFeedbackMessage')) {
       throw new Error(
-        `Atribut "invalidFeedbackMessage" harus diterapkan pada elemen ${this.localName}`,
+          `Atribut "invalidFeedbackMessage" harus diterapkan pada elemen ${this.localName}`,
       );
     }
   }
@@ -41,14 +41,15 @@ class TextareaWithValidation extends LitWithoutShadowDom {
       ></textarea>
 
       ${this._validFeedbackTemplate()}
-        <div class="invalid-feedback">${this.invalidFeedbackMessage}</div>
+      <div class="invalid-feedback">${this.invalidFeedbackMessage}</div>
     `;
   }
 
   _validFeedbackTemplate() {
-    if(this.validFeedbackMessage) {
-        return html`<div class="valid-feedback">${this.validFeedbackMessage}</div>`;
+    if (this.validFeedbackMessage) {
+      return html` <div class="valid-feedback">${this.validFeedbackMessage}</div> `;
     }
+
     return html``;
   }
 }

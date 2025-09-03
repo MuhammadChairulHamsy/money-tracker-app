@@ -2,10 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file target-language="en" source-language="id" original="lit-localize-inputs" datatype="plaintext">
     <body>
-      <trans-unit id="sf70ed558ed523ac4">
-        <source>Dibuat dengan ❤ oleh Dicoding Indonesia</source>
-        <target>Built with ❤ by Dicoding Indonesia</target>
-      </trans-unit>
       <trans-unit id="s48d08afb2fffe7fd">
         <source>Tipe</source>
         <target>Type</target>
@@ -24,7 +20,7 @@
       </trans-unit>
       <trans-unit id="s50fa71c148532fe5">
         <source>Catatan</source>
-        <target>Note</target>
+        <target>Description</target>
       </trans-unit>
       <trans-unit id="s749c72374d54863f">
         <source>Tutup</source>
@@ -45,6 +41,10 @@
       <trans-unit id="s229fb4df9ecf3ed1">
         <source>Keluar</source>
         <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="sf70ed558ed523ac4">
+        <source>Dibuat dengan ❤ oleh Dicoding Indonesia</source>
+        <target>Built with ❤ by Dicoding Indonesia</target>
       </trans-unit>
     </body>
   </file>

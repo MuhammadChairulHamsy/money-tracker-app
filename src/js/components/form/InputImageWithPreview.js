@@ -56,7 +56,6 @@ class InputImageWithPreview extends LitWithoutShadowDom {
       if (this.defaultImage) {
         evidenceRecordImg.classList.add('d-none');
       }
-
       evidenceImgChange.parentElement.classList.remove('d-none');
       evidenceImgChange.classList.remove('d-none');
       evidenceImgChange.style.backgroundImage = `url('${event.target.result}')`;
@@ -69,12 +68,14 @@ class InputImageWithPreview extends LitWithoutShadowDom {
     let validFeedbackTemplate = '';
     let invalidFeedbackTemplate = '';
     if (this.validFeedbackMessage) {
-      validFeedbackTemplate = html`<div class="valid-feed">${this.validFeedbackMessage}</div>`;
+      validFeedbackTemplate = html`
+        <div class="valid-feedback">${this.validFeedbackMessage}</div>
+      `;
     }
     if (this.invalidFeedbackMessage) {
-      invalidFeedbackTemplate = html`<div class="invalid-feedback">
-        ${this.invalidFeedbackMessage}
-      </div>`;
+      invalidFeedbackTemplate = html`
+        <div class="invalid-feedback">${this.invalidFeedbackMessage}</div>
+      `;
     }
 
     return html`${validFeedbackTemplate}${invalidFeedbackTemplate}`;
@@ -84,19 +85,27 @@ class InputImageWithPreview extends LitWithoutShadowDom {
     const imgChangeTemplate = html`
       <div
         class="w-100 h-100 ${this.defaultImage ? 'd-none' : ''}"
-        style="background-repeat: no-repeat; background-position: center; backround-size: contain;"
+        style="
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        "
         id="${this.inputId || nothing}ImgChange"
       ></div>
     `;
-
-    if(this.defaultImage) {
+    if (this.defaultImage) {
       return html`
-        <img src="${this.defaultImage}" alt="${this.defaultImageAlt}" class="img-fluid h-100" id="${this.inputId || nothing}Img" />
+        <img
+          class="img-fluid h-100"
+          src="${this.defaultImage}"
+          alt="${this.defaultImageAlt}"
+          id="${this.inputId || nothing}Img"
+        />
         ${imgChangeTemplate}
       `;
     }
 
-    return html`${imgChangeTemplate}`;
+    return html` ${imgChangeTemplate} `;
   }
 }
 

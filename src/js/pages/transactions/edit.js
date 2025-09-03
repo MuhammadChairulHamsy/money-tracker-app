@@ -20,6 +20,7 @@ const Edit = {
         required: true,
       },
     ];
+
     const inputRadioTransactionTypeEdit = document.querySelector('#inputRadioTransactionTypeEdit');
     inputRadioTransactionTypeEdit.setAttribute(
       'listRadio',
@@ -66,7 +67,7 @@ const Edit = {
       console.log('formData');
       console.log(formData);
 
-      this._goToDashboardPage();
+      // this._goToDashboardPage();
     }
   },
 
@@ -90,35 +91,27 @@ const Edit = {
 
   _populateTransactionToForm(transactionRecord = null) {
     if (!(typeof transactionRecord === 'object')) {
-      throw new Error(`Parameter transactionRecord should be an object.`);
+      throw new Error(
+        `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
+      );
     }
 
     const nameInput = document.querySelector('#validationCustomRecordName');
     const amountInput = document.querySelector('#validationCustomAmount');
     const dateInput = document.querySelector('#validationCustomDate');
-    const inputImagePreviewEdit = document.querySelector('#inputImagePreviewEdit');
+    const evidenceInput = document.querySelector('#validationCustomEvidenceImg');
     const descriptionInput = document.querySelector('#validationCustomNotes');
-    const inputRadioTransactionTypeEdit = document.querySelector('#inputRadioTransactionTypeEdit');
+    const typesInput = document.querySelectorAll('input[name="recordType"]');
 
     nameInput.value = transactionRecord.name;
     amountInput.value = transactionRecord.amount;
     dateInput.value = transactionRecord.date;
-
-    inputImagePreviewEdit.setAttribute('defaultImage', transactionRecord.evidenceUrl);
-    inputImagePreviewEdit.setAttribute('defaultImageAlt', transactionRecord.name);
-
-    descriptionInput.value = transactionRecord.notes;
-
-    const listInputRadioTransactionType = JSON.parse(
-      inputRadioTransactionTypeEdit.getAttribute('listRadio'),
-    );
-    listInputRadioTransactionType.forEach((item) => {
+    evidenceInput.setAttribute('src', transactionRecord.evidenceUrl);
+    evidenceInput.setAttribute('alt', transactionRecord.name);
+    descriptionInput.value = transactionRecord.description;
+    typesInput.forEach((item) => {
       item.checked = item.value === transactionRecord.type;
     });
-    inputRadioTransactionTypeEdit.setAttribute(
-      'listRadio',
-      JSON.stringify(listInputRadioTransactionType),
-    );
   },
 
   _validateFormData(formData) {

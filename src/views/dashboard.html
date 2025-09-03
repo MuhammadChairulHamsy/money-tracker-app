@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title><%= htmlWebpackPlugin.options.title %> | Money Tracker App</title>
   </head>
   <body>
@@ -14,6 +14,7 @@
       <div class="main-content">
         <div class="container py-5">
           <h1 class="mb-3">Dashboard</h1>
+
           <!-- Card Information -->
           <div class="row mb-5 g-3">
             <div class="col-12 col-sm-6 col-lg-4">
@@ -22,8 +23,7 @@
                 content="0 Transaksi"
                 description="Bulan ini"
                 classes="h-100 bg-primary text-bg-primary bg-gradient"
-              >
-              </card-dashboard>
+              ></card-dashboard>
             </div>
             <div class="col-12 col-sm-6 col-lg-4">
               <card-dashboard
@@ -31,8 +31,7 @@
                 content="Rp 0"
                 description="Total pemasukan"
                 classes="h-100 bg-success text-bg-success bg-gradient"
-              >
-              </card-dashboard>
+              ></card-dashboard>
             </div>
             <div class="col-12 col-sm-12 col-lg-4">
               <card-dashboard
@@ -40,10 +39,10 @@
                 content="Rp 0"
                 description="Total pengeluaran"
                 classes="h-100 bg-warning text-bg-warning bg-gradient"
-              >
-              </card-dashboard>
+              ></card-dashboard>
             </div>
           </div>
+
           <!-- Records -->
           <div>
             <div class="d-flex justify-content-between align-items-center">
@@ -55,6 +54,7 @@
                 content="Tambah Transaksi"
               ></button-link>
             </div>
+
             <div class="row mt-3">
               <div class="col">
                 <table class="table table-sm table-bordered" id="recordsTable">
@@ -78,7 +78,7 @@
     </main>
 
     <footer>
-      <div class="main-footeButtr bg-dark">
+      <div class="main-footer bg-dark">
         <div class="container px-3 py-4">
           <footer-app></footer-app>
         </div>

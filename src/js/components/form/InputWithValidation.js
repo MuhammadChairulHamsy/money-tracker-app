@@ -6,10 +6,16 @@ class InputWithValidation extends LitWithoutShadowDom {
     type: { type: String, reflect: true },
     value: { type: String, reflect: true },
     inputId: { type: String, reflect: true },
+
+    validFeedbackMessage: { type: String, reflect: true },
+    invalidFeedbackMessage: { type: String, reflect: true },
+
+    required: { type: Boolean, reflect: true },
   };
 
   constructor() {
     super();
+    this._checkAvailabilityProperty();
 
     this.type = 'text';
     this.required = false;
@@ -18,7 +24,7 @@ class InputWithValidation extends LitWithoutShadowDom {
   _checkAvailabilityProperty() {
     if (!this.hasAttribute('invalidFeedbackMessage')) {
       throw new Error(
-        `Atribut "invalidFeedbackMessage" harus diterapkan pada elemen ${this.localName}`,
+          `Atribut "invalidFeedbackMessage" harus diterapkan pada elemen ${this.localName}`,
       );
     }
   }
@@ -26,9 +32,9 @@ class InputWithValidation extends LitWithoutShadowDom {
   render() {
     return html`
       <input
-        type=${this.type}
         id=${this.inputId || nothing}
         class="form-control"
+        type=${this.type}
         value=${this.value || nothing}
         ?required=${this.required}
         @input=${(e) => (this.value = e.target.value)}
@@ -40,8 +46,8 @@ class InputWithValidation extends LitWithoutShadowDom {
   }
 
   _validFeedbackTemplate() {
-    if(this.invalidFeedbackMessage) {
-        return html`<div class="valid-feedback">${this._validFeedbackMessage}</div>`;
+    if (this.validFeedbackMessage) {
+      return html` <div class="valid-feedback">${this.validFeedbackMessage}</div> `;
     }
 
     return html``;

@@ -18,7 +18,6 @@ class InputGroupWithValidation extends LitWithoutShadowDom {
 
   constructor() {
     super();
-
     this._checkAvailabilityProperty();
   }
 
@@ -29,13 +28,13 @@ class InputGroupWithValidation extends LitWithoutShadowDom {
 
     if (!(this.hasAttribute('inputGroupText') || this.hasAttribute('inputGroupIcon'))) {
       throw new Error(
-        `Salah satu dari atribut harus diterapkan pada elemen ${this.localName}: inputGroupText dan inputGroupIcon`,
+          `Salah satu dari atribut harus diterapkan pada elemen ${this.localName}: inputGroupText dan inputGroupIcon`,
       );
     }
 
     if (!this.hasAttribute('invalidFeedbackMessage')) {
       throw new Error(
-        `Atribut "invalidFeedbackMessage" harus diterapkan pada elemen ${this.localName}`,
+          `Atribut "invalidFeedbackMessage" harus diterapkan pada elemen ${this.localName}`,
       );
     }
   }
@@ -45,9 +44,9 @@ class InputGroupWithValidation extends LitWithoutShadowDom {
       <div class="input-group has-validation">
         <span class="input-group-text d-flex gap-2">${this.inputGroupTextTemplate()}</span>
         <input
-          type=${this.type}
           class="form-control"
           id=${this.inputId || nothing}
+          type=${this.type}
           value=${this.value || nothing}
           ?required=${this.required}
         />
@@ -60,23 +59,23 @@ class InputGroupWithValidation extends LitWithoutShadowDom {
 
   inputGroupTextTemplate() {
     let inputGroupIconTemplate = '';
-    if(this.inputGroupIcon) {
-        inputGroupIconTemplate = html`<i class="bi ${this.inputGroupIcon}"></i>`;
+    if (this.inputGroupIcon) {
+      inputGroupIconTemplate = html`<i class="bi ${this.inputGroupIcon}"></i>`;
     }
 
     let inputGroupTextTemplate = '';
-    if(this.inputGroupText) {
-        inputGroupTextTemplate = html`${this.inputGroupText}`;
+    if (this.inputGroupText) {
+      inputGroupTextTemplate = html`${this.inputGroupText}`;
     }
 
     return html`${inputGroupIconTemplate}${inputGroupTextTemplate}`;
   }
 
   _validFeedbackTemplate() {
-    if(this.validation) {
-        if(this.validFeedbackMessage) {
-            return html`<div class="valid-feedback">${this.validFeedbackMessage}</div>`;
-        }
+    if (this.validation) {
+      if (this.validFeedbackMessage) {
+        return html` <div class="valid-feedback">${this.validFeedbackMessage}</div> `;
+      }
     }
 
     return html``;
