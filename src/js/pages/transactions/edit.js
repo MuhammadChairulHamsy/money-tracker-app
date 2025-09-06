@@ -1,4 +1,5 @@
 import CheckUserAuth from "../auth/check-user-auth";
+import Transactions from "../../network/transactions";
 
 const Edit = {
   async init() {
@@ -40,13 +41,15 @@ const Edit = {
       return;
     }
 
-    const fetchRecords = await fetch('/data/DATA.json');
-    const responseRecords = await fetchRecords.json();
-    const userTransactionsHistory = responseRecords.results.transactionsHistory;
+    try {
+      const response = await Transactions.getAll(transactionId);
+      const responseRecords = response.data.results;
+  
+      this._populateTransactionToForm(responseRecords);
 
-    const dataRecord = userTransactionsHistory.find((item) => item.id === transactionId);
-
-    this._populateTransactionToForm(dataRecord);
+    }catch(error) {
+      console.error(error)
+    }
   },
 
   _initialListener() {
@@ -64,14 +67,24 @@ const Edit = {
     );
   },
 
-  _sendPost() {
+async _sendPost() {
     const formData = this._getFormData();
 
     if (this._validateFormData({ ...formData })) {
       console.log('formData');
       console.log(formData);
 
-      // this._goToDashboardPage();
+      try {
+        const response = await Transactions.update({
+          id: this._getTransactionId(),
+          ...formData,
+        });
+        window.alert(`Transaction with id ${this._getTransactionId()} has been edited`);
+
+        this._goToDashboardPage();
+      } catch(error) {
+        console.error(error);
+      }
     }
   },
 
@@ -109,7 +122,10 @@ const Edit = {
 
     nameInput.value = transactionRecord.name;
     amountInput.value = transactionRecord.amount;
-    dateInput.value = transactionRecord.date;
+    dateInput.value = transactionRecord.date.slice(0, 16);
+
+    inputImagePreviewEdit.setAttribute('defaultImage', transactionRecord.evidenceUrl)
+    inputImagePreviewEdit.setAttribute('defaultImageAlt', transactionRecord.name)
     evidenceInput.setAttribute('src', transactionRecord.evidenceUrl);
     evidenceInput.setAttribute('alt', transactionRecord.name);
     descriptionInput.value = transactionRecord.description;
