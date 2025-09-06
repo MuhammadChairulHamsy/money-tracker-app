@@ -1,26 +1,36 @@
-import Utils from "../../utils/utils";
-import Config from "../../config/config";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 const CheckUserAuth = {
-    excludeRedirectPage: ['login.html', 'register.html'],
+  excludeRedirectPage: ['login.html', 'register.html'],
+ 
+ checkLoginState(finallyCallback = null) {
+  if (finallyCallback !== null && typeof finallyCallback !== "function") {
+    throw new Error("Parameter finallyCallback should be a callback function");
+  }
 
-    checkLoginState() {
-        const userToken = Utils.getUserToken(Config.USER_TOKEN_KEY);
-        const isUserSignedIn  = Boolean(userToken);
-        const isUserOnAuthPage = this._isUserOnAuthPage(this.excludeRedirectPage);
+  const isUserOnAuthPage = this._isUserOnAuthPage(this.excludeRedirectPage);
 
-        if(isUserSignedIn) {
-            if(isUserOnAuthPage) {
-                window.location.href = '/'; 
-            } else {
-                this._showLoginMenuOrUserLogMenu(isUserSignedIn);
-            }
-        } else {
-            if(!isUserOnAuthPage) {
-                window.location.href = '/auth/login.html';
-            }
-        }
-    },
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const isUserSignedIn = Boolean(user);
+
+      if (isUserOnAuthPage) {
+        window.location.replace("/");
+      } else {
+        this._showLoginMenuOrUserLogMenu(isUserSignedIn);
+      }
+    } else {
+      if (!isUserOnAuthPage) {
+        window.location.replace("/auth/login.html");
+      }
+    }
+
+    if (typeof finallyCallback === "function") {
+      finallyCallback();
+    }
+  });
+},
 
     _showLoginMenuOrUserLogMenu(userLoginState) {
         const loginMenu = document.querySelector('#loginMenu');

@@ -1,29 +1,15 @@
-import CheckUserAuth from "../auth/check-user-auth";
-import Transaction from "../../network/transactions";
-import Transactions from "../../network/transactions";
+import Transactions from '../../network/transactions';
 
 const Add = {
   async init() {
-    CheckUserAuth.checkLoginState();
-
     this._initialUI();
     this._initialListener();
   },
 
   _initialUI() {
     const listInputRadioTransactionType = [
-      {
-        inputId: 'recordType1',
-        value: 'income',
-        caption: 'Pemasukan',
-        required: true,
-      },
-      {
-        inputId: 'recordType2',
-        value: 'expense',
-        caption: 'Pengeluaran',
-        required: true,
-      },
+      { inputId: 'recordType1', value: 'income', caption: 'Pemasukan', required: true },
+      { inputId: 'recordType2', value: 'expense', caption: 'Pengeluaran', required: true },
     ];
 
     const inputRadioTransactionTypeAdd = document.querySelector('#inputRadioTransactionTypeAdd');
@@ -48,19 +34,17 @@ const Add = {
     );
   },
 
- async _sendPost() {
+  async _sendPost() {
     const formData = this._getFormData();
 
-    if (this._validateFormData({ ...formData })) {
-      console.log('formData');
-      console.log(formData);
+    if (this._validateFormData(formData)) {
+      console.log('formData', formData);
 
       try {
-        const response = await Transactions.store(formData);
+        await Transactions.store(formData);
         window.alert('New transaction added successfully');
-        
         this._goToDashboardPage();
-      } catch(error) {
+      } catch (error) {
         console.error(error);
       }
     }
@@ -70,7 +54,6 @@ const Add = {
     const nameInput = document.querySelector('#validationCustomRecordName');
     const amountInput = document.querySelector('#validationCustomAmount');
     const dateInput = document.querySelector('#validationCustomDate');
-    const evidenceInput = document.querySelector('#validationCustomEvidence');
     const descriptionInput = document.querySelector('#validationCustomNotes');
     const typeInput = document.querySelector('input[name="recordType"]:checked');
 
@@ -78,16 +61,13 @@ const Add = {
       name: nameInput.value,
       amount: Number(amountInput.value),
       date: new Date(dateInput.value),
-      evidence: evidenceInput.files[0],
       description: descriptionInput.value,
       type: typeInput.value,
     };
   },
 
   _validateFormData(formData) {
-    const formDataFiltered = Object.values(formData).filter((item) => item === '');
-
-    return formDataFiltered.length === 0;
+    return Object.values(formData).every((item) => item !== '');
   },
 
   _goToDashboardPage() {

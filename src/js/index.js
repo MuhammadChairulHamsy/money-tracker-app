@@ -13,6 +13,8 @@ import Register from './pages/auth/register';
 
 import './utils/firebase';
 import * as bootstrap from 'bootstrap';
+import CheckUserAuth from './pages/auth/check-user-auth';
+import { checkActionCode } from 'firebase/auth';
 
 const routes = {
   '/': Dashboard,
@@ -38,6 +40,8 @@ const initPages = () => {
 window.addEventListener('DOMContentLoaded', async () => {
   initPages();
 
-  const route = detectRoute();
-  route.init();
+  CheckUserAuth.checkLoginState(async () => {
+    const route = detectRoute();
+    route.init();
+  });
 });

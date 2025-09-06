@@ -1,10 +1,7 @@
-import CheckUserAuth from "../auth/check-user-auth";
 import Transactions from "../../network/transactions";
 
 const Edit = {
   async init() {
-    CheckUserAuth.checkLoginState();
-
     this._initialUI();
     await this._initialData();
     this._initialListener();
@@ -12,79 +9,52 @@ const Edit = {
 
   _initialUI() {
     const listInputRadioTransactionType = [
-      {
-        inputId: 'recordType1',
-        value: 'income',
-        caption: 'Pemasukan',
-        required: true,
-      },
-      {
-        inputId: 'recordType2',
-        value: 'expense',
-        caption: 'Pengeluaran',
-        required: true,
-      },
+      { inputId: 'recordType1', value: 'income', caption: 'Pemasukan', required: true },
+      { inputId: 'recordType2', value: 'expense', caption: 'Pengeluaran', required: true },
     ];
 
     const inputRadioTransactionTypeEdit = document.querySelector('#inputRadioTransactionTypeEdit');
     inputRadioTransactionTypeEdit.setAttribute(
       'listRadio',
-      JSON.stringify(listInputRadioTransactionType),
+      JSON.stringify(listInputRadioTransactionType)
     );
   },
 
   async _initialData() {
-    const transactionId = Number(this._getTransactionId());
-
+    const transactionId = this._getTransactionId();
     if (!transactionId) {
       alert('Data dengan id yang dicari tidak ditemukan');
       return;
     }
 
     try {
-      const response = await Transactions.getAll(transactionId);
-      const responseRecords = response.data.results;
-  
-      this._populateTransactionToForm(responseRecords);
-
-    }catch(error) {
-      console.error(error)
+      const transaction = await Transactions.getById(transactionId);
+      this._populateTransactionToForm(transaction);
+    } catch (error) {
+      console.error(error);
     }
   },
 
   _initialListener() {
-    const editRecordForm = document.querySelector('#editRecordForm');
-    editRecordForm.addEventListener(
-      'submit',
-      (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        editRecordForm.classList.add('was-validated');
-        this._sendPost();
-      },
-      false,
-    );
+    const editForm = document.querySelector('#editRecordForm');
+    editForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      editForm.classList.add('was-validated');
+      await this._sendPost();
+    });
   },
 
-async _sendPost() {
+  async _sendPost() {
     const formData = this._getFormData();
+    if (!this._validateFormData(formData)) return;
 
-    if (this._validateFormData({ ...formData })) {
-      console.log('formData');
-      console.log(formData);
-
-      try {
-        const response = await Transactions.update({
-          id: this._getTransactionId(),
-          ...formData,
-        });
-        window.alert(`Transaction with id ${this._getTransactionId()} has been edited`);
-
-        this._goToDashboardPage();
-      } catch(error) {
-        console.error(error);
-      }
+    try {
+      await Transactions.update({ ...formData, id: this._getTransactionId() });
+      window.alert(`Transaction with id ${this._getTransactionId()} has been edited`);
+      this._goToDashboardPage();
+    } catch (error) {
+      console.error(error);
     }
   },
 
@@ -92,7 +62,6 @@ async _sendPost() {
     const nameInput = document.querySelector('#validationCustomRecordName');
     const amountInput = document.querySelector('#validationCustomAmount');
     const dateInput = document.querySelector('#validationCustomDate');
-    const evidenceInput = document.querySelector('#validationCustomEvidence');
     const descriptionInput = document.querySelector('#validationCustomNotes');
     const typeInput = document.querySelector('input[name="recordType"]:checked');
 
@@ -100,50 +69,30 @@ async _sendPost() {
       name: nameInput.value,
       amount: Number(amountInput.value),
       date: new Date(dateInput.value),
-      evidence: evidenceInput.files[0],
       description: descriptionInput.value,
-      type: typeInput.value,
+      type: typeInput?.value,
     };
   },
 
-  _populateTransactionToForm(transactionRecord = null) {
-    if (!(typeof transactionRecord === 'object')) {
-      throw new Error(
-        `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
-      );
-    }
+  _populateTransactionToForm(transaction) {
+    document.querySelector('#validationCustomRecordName').value = transaction.name;
+    document.querySelector('#validationCustomAmount').value = transaction.amount;
+    document.querySelector('#validationCustomDate').value = new Date(transaction.date).toISOString().slice(0, 16);
+    document.querySelector('#validationCustomNotes').value = transaction.description;
 
-    const nameInput = document.querySelector('#validationCustomRecordName');
-    const amountInput = document.querySelector('#validationCustomAmount');
-    const dateInput = document.querySelector('#validationCustomDate');
-    const evidenceInput = document.querySelector('#validationCustomEvidenceImg');
-    const descriptionInput = document.querySelector('#validationCustomNotes');
-    const typesInput = document.querySelectorAll('input[name="recordType"]');
-
-    nameInput.value = transactionRecord.name;
-    amountInput.value = transactionRecord.amount;
-    dateInput.value = transactionRecord.date.slice(0, 16);
-
-    inputImagePreviewEdit.setAttribute('defaultImage', transactionRecord.evidenceUrl)
-    inputImagePreviewEdit.setAttribute('defaultImageAlt', transactionRecord.name)
-    evidenceInput.setAttribute('src', transactionRecord.evidenceUrl);
-    evidenceInput.setAttribute('alt', transactionRecord.name);
-    descriptionInput.value = transactionRecord.description;
-    typesInput.forEach((item) => {
-      item.checked = item.value === transactionRecord.type;
+    document.querySelectorAll('input[name="recordType"]').forEach((item) => {
+      item.checked = item.value === transaction.type;
     });
   },
 
   _validateFormData(formData) {
-    delete formData.evidence;
-    const formDataFiltered = Object.values(formData).filter((item) => item === '');
-
-    return formDataFiltered.length === 0;
+    const requiredFields = ['name', 'amount', 'date', 'description', 'type'];
+    return requiredFields.every(key => formData[key] !== '' && formData[key] !== null && formData[key] !== undefined);
   },
 
   _getTransactionId() {
-    const searchParamEdit = new URLSearchParams(window.location.search);
-    return searchParamEdit.has('id') ? searchParamEdit.get('id') : null;
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
   },
 
   _goToDashboardPage() {
