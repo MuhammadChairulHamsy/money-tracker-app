@@ -10,6 +10,8 @@ import Add from './pages/transactions/add';
 import Edit from './pages/transactions/edit';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
+
+import './utils/firebase';
 import * as bootstrap from 'bootstrap';
 
 const routes = {
